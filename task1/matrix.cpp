@@ -1,4 +1,4 @@
-#include "header.h"
+#include "header.hpp"
 #include <algorithm>
 
 void mswitch (int** a, int f, int s) {

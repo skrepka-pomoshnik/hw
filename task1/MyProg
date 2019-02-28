@@ -1,0 +1,16 @@
+CC=g++
+CFLAGS=-c -Wall
+
+all: ladder
+
+ladder: ladder.o matrix.o euclid.o 
+	$(CC) ladder.o matrix.o euclid.o -o ladder
+
+euclid: euclid.cpp
+	$(CC) $(CFLAGS) euclid.cpp
+
+matrix: matrix.cpp
+	$(CC) $(CFLAGS) matrix.cpp
+
+clean:
+	rm -rf *.o ladder
