@@ -1,6 +1,6 @@
 #!/bin/bash
-make clean
-make
+make -f MyProg clean
+make -f MyProg
     let r=0
 for i in tests/*[1-9]
 do 
