@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "header.hpp"
+#include "header.h"
 using namespace std;
 
 void mprint (int** a, int i, int j) {
@@ -25,7 +25,7 @@ void enterthematrix (int** & M, int i, int j, string dat) {
       for (int j0 = 0 ; j0 < j; j0++) {
           string t = "0";
           while (dat[n] != '.') { t = t+dat[n], n++;};
-          M[i0][j0] = stoi(t); if ((unsigned) n < dat.length()) {n++;}; 
+          M[i0][j0] = stoi(t); if (n < dat.length()) {n++;}; 
       }
   }
 //  cout << endl << "Your matrix is: " << endl;
@@ -62,11 +62,7 @@ void enterthematrix (int** & M, int i, int j, string dat) {
 
 int main (int argc, char *argv[]) {
     static int** M;
-    if (argc == 4) {
     string sr(argv[3]);
     enterthematrix(M, atoi(argv[1]), atoi(argv[2]),sr);
-    } else {
-        cout << "pls 3 arguments" << endl; 
-    }
     return 0;
 }
