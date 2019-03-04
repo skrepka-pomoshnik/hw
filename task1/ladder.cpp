@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "header.h"
+#include "header.hpp"
 using namespace std;
 
 void mprint (int** a, int i, int j) {
