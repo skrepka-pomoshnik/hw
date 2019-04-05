@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <stdexcept>
 
-
 class Upgrade {
     public:
         Upgrade(int a) try: uplvl(0), maxlvl(a) {}
@@ -60,11 +59,11 @@ class State {
 };
 
 
-//RANDOM
+//RANDOM (enum?)
 const int RHIRSH = 5;
 const int RPOSTDOC = 10;
 const int RPOSTSEARCH = 10;
-const int RSTUDENT = 100;
+const int RSTUDENT = 20;
 const int RLECTURE = 10;
 const int RDOUBLE = 15;
 
@@ -267,7 +266,6 @@ void searchforA(World &w) {
             w.workers[0].num++;
             cls();
             std::cout << "You found an postgraduate to write an article for you.";
-            waitfor('\n');
             break;}
 
         if (in == 'q') std::cout << "You decided to give up";
@@ -363,9 +361,8 @@ int main () {
         std::cout << "Good morning, doc" << hello;
         ListMenu(MenuA,items);
         w.state.sclog();
-        for (int i=0; i < items; i++) {
-            if (in == MenuA[i].letter && MenuA[i].avail) MenuA[i].action(w); 
-        }
+        for (const auto i : MenuA) 
+            if (in == i.letter && i.avail) i.action(w); 
         if (in == 'q') break;
     }
 
