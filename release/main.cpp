@@ -1,7 +1,7 @@
 #include <unistd.h>
-#include <output.cpp>
-#include <species.cpp>
-#include <input.cpp>
+#include "output.cpp"
+#include "species.cpp"
+#include "input.cpp"
 
 std::string INPUTSTRING,OUTPUTNAME = "mymelody",
     LILYPONDP = "/usr/bin/lilypond";

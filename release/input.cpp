@@ -2,8 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <unordered_map>
-#include <constants.hh>
-#include <sets.hh>
+#include "constants.hh"
+#include "sets.hh"
 
 std::unordered_map<char, int> notestonumber = {{'c', 0}, {'d', 2}, {'e', 4}, {'f', 5}, {'g', 7}, {'a', 9}, {'b', 11}};
 //std::unordered_map<int, std::string> cerror = {{1, "dissonance"}, {2, "starts or end on tonic"}};
@@ -87,7 +87,7 @@ std::vector<std::pair<int,int>> stringtophrase (std::string input) {
 }
 
 int ispropercf (std::vector<std::pair<int,int>> input) {
-    bool climax; 
+    bool climax = false; 
     int lowest = input.front().first,highest = input.front().first, l = 0;
     for (int i = 0; i < input.size(); i++) {
         if (input[i].first < lowest) lowest = input[i].first;

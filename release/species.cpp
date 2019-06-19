@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include <tree.hh>
-#include <constants.hh>
-#include <sets.hh>
+#include "tree.hh"
+#include "constants.hh"
+#include "sets.hh"
 
 typedef tree<std::pair<int,int>>  solutiontree;
 typedef std::vector<std::pair<int,int>> phrase;

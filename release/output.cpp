@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <unordered_map>
-#include <constants.hh>
+#include "constants.hh"
 
 typedef std::vector<std::pair<int,int>> phrase;
 const std::string nname[] = {"One","Two","Three","Four"};
