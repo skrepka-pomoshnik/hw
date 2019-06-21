@@ -1,13 +1,4 @@
-#include <iostream>
-#include <cmath>
-#include <vector>
-#include "tree.hh"
-#include "constants.hh"
-#include "sets.hh"
-
-typedef tree<std::pair<int,int>>  solutiontree;
-typedef std::vector<std::pair<int,int>> phrase;
-std::vector<std::set<int>> Modes = {Io,Do,Ph,Ly,Mi,Ae,Lo};
+#include "species.h"
 
 void PrintTreePreorder(const solutiontree& tr, solutiontree::pre_order_iterator it, solutiontree::pre_order_iterator end){
     if(!tr.is_valid(it)) return;
@@ -54,26 +45,6 @@ std::set<int> WhatMode(phrase Input) {
     return Io; 
 }
 
-class Beat { //lower is first
-    public:
-        Beat (int l,int h) { low = l; high = h; 
-            int ainterval = high-low;
-            if (ainterval == 0 || ainterval % 12 != 0) {
-                interval = ainterval % 12; } else {
-                    interval = Oct; }
-        }
-        Beat (int a1, int a2, int b) { low = a1; low2 = a2; high = b;
-            int ainterval = high-low;
-            if (ainterval == 0 || ainterval % 12 != 0) {
-                interval = ainterval % 12; } else {
-                    interval = Oct; }
-            ainterval = high-low2;
-            if (ainterval == 0 || ainterval % 12 != 0) {
-                interval = ainterval % 12; } else {
-                    interval = Oct; }
-        }
-        int high,low,low2,interval,interval1;
-};
 
 std::set<int> InMode(int Note, std::set<int> Mode, std::set<int> Intervals) {
     Note = Note%12;
