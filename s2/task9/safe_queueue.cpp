@@ -56,14 +56,13 @@ void incinerator(int t2) {
 //}
 
 int main (int argc, char* argv[]) {
-    const int M = 5, N = 3, L = 100000;
+    const int M = 5, N = 3, L = 1000;
     int t1 = 5,t2 = 5;
-    std::cout << argc;
     if (argc < 3) return 1;
     t1 = atoi(argv[1]), t2 = atoi(argv[2]);
     srand(time(NULL));
 
-    std::cout << t1 << " "<< t2;
+    std::cout << t1 << " "<< t2 << " ";
 
 
     for (int j = 0; j < L; j++) {

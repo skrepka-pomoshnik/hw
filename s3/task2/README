@@ -1,0 +1,66 @@
+#Задание
+Создать базу данных, таблицу и написать bash-скрипт, делающий запроcы SELECT.
+
+#Отчет
+Вывод bash-скрипта:
+
+ id | name  
+----+-------
+  1 | zero
+  2 | one
+  3 | two
+  4 | three
+  5 | four
+  6 | five
+(6 rows)
+
+ id |   name   
+----+----------
+  1 | nulla
+  2 | unus
+  3 | duo
+  4 | tres
+  5 | quattuor
+  6 | quinque
+(6 rows)
+
+ id |  name  
+----+--------
+  1 | ноль
+  2 | один
+  3 | два
+  4 | три
+  5 | четыре
+  6 | пять
+(6 rows)
+
+ id |   item    | price 
+----+-----------+-------
+  1 | milk      |    10
+  2 | bread     |     5
+  3 | olive oil |    25
+  4 | gun       |     1
+(4 rows)
+
+ id | area |   item    
+----+------+-----------
+  1 | a    | milk
+  2 | a    | bread
+  3 | b    | olive oil
+  4 | c    | gun
+(4 rows)
+
+ name |   name   |  name  
+------+----------+--------
+ four | quattuor | четыре
+(1 row)
+
+   item    
+-----------
+ olive oil
+(1 row)
+
+ area 
+------
+ c
+(1 row)
