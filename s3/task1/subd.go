@@ -1,20 +1,29 @@
 package main
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 )
 
-const MAX = 10
-const RESERVE = 2
-const DMAX = MAX - RESERVE
+const (
+	MAX     = 10
+	RESERVE = 2
+	DMAX    = MAX - RESERVE
+	HELLO   = "\n? "
+	ERROR   = "Error: syntax error at or near: %v" + HELLO
+)
 
 type Table struct {
 	sizex, sizey int
 	Data         []string
 }
+
+var goods, storage, numbers, numerus, числа Table
+var Tables = map[string]*Table{"goods": &goods, "storage": &storage, "numbers": &numbers, "numerus": &numerus, "числа": &числа}
 
 func (T *Table) Init(n []string, t []string) error { //name and type
 	if len(n) != len(t) || len(n) > MAX {
@@ -77,8 +86,7 @@ func (T *Table) Export(File string) error {
 			continue
 		}
 		if len(strings.Split(val, ",")) != T.sizex {
-			fmt.Printf("wrong size: %v", val)
-			return errors.New("too lengthy")
+			return fmt.Errorf("too lengthy %v", len(strings.Split(val, ",")))
 		}
 		if num > DMAX {
 			break
@@ -107,58 +115,89 @@ func (T *Table) RemoveColumn(n int) error {
 	return nil
 }
 
-func (T *Table) SortBy(n int, asc bool) error {
-	if n > T.sizex {
-		return errors.New("No such column")
+//select something from table orderby
+func Select(columns []string, T Table, asc int) (Table, error) {
+	smap := make(map[string]int)
+	for i, v := range T.Data[:T.sizex] {
+		smap[v] = i
 	}
-	if T.Data[MAX+n] == "int" {
 
+	for _, v := range columns {
+		if _, ok := smap[v]; ok {
+			smap[v] = -1
+		} else {
+			return Table{}, fmt.Errorf("No such column %v"+HELLO, v)
+		}
 	}
 
+	TT := T
+	TT.Data = make([]string, len(T.Data))
+	copy(TT.Data, T.Data)
+
+	deleted := 0 //deleted column
+	for _, i := range smap {
+		if i != -1 {
+			TT.RemoveColumn(i - deleted)
+			deleted++
+		}
+	}
+
+	return TT, nil
+}
+
+func printselection(input []string) error {
+	var from int
+	for i, v := range input {
+		if strings.EqualFold(v, "from") {
+			from = i
+			break
+		}
+	}
+	if from < 2 {
+		return fmt.Errorf(ERROR, input[from])
+	}
+	T, ok := Tables[input[from+1]]
+	if !ok {
+		return fmt.Errorf(ERROR, input[from+1])
+	}
+	columns := strings.Split(input[from-1], ",")
+	if len(columns) == 1 && columns[0] == "*" {
+		columns = T.Data[:T.sizex]
+	}
+	Result, err := Select(columns, *T, 0)
+	if err != nil {
+		fmt.Print(err)
+	}
+	fmt.Print(Result)
+	fmt.Print(HELLO)
 	return nil
 }
 
-//select something from table orderby
-func Select(columns []string, T Table, regex string, asc int) (Table, error) {
-	set := make(map[int]struct{})
-	if len(columns) == T.sizex {
-		return T, nil
-	}
-
-	if len(columns) > T.sizex {
-		return T, errors.New("too much columns")
-	}
-	for inum, i := range T.Data[:T.sizex-1] {
-		for _, j := range columns {
-			//		fmt.Printf("%v==%v:%v", i, j, i == j)
-			if i == j {
-				set[inum] = struct{}{}
+func scanner() {
+	fmt.Print("Welcome! Press help to exit.\n? ")
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		switch {
+		case scanner.Text() == "":
+			fmt.Print("? ")
+		case strings.EqualFold(strings.Fields(scanner.Text())[0], "select"):
+			err := printselection(strings.Fields(scanner.Text()))
+			if err != nil {
+				fmt.Print(ERROR)
 			}
-		} //what if some fields are not found?
+		case scanner.Text() == "exit;":
+			return
+		case scanner.Text() == "help":
+			return
+		case scanner.Text() == "help;":
+			return
+		default:
+			fmt.Printf(ERROR, scanner.Text())
+		}
 	}
-	kk := 0 //deleted column
-	for k := range set {
-		T.RemoveColumn(k - kk)
-		kk++
-	}
-
-	return T, nil
 }
 
-//func scanner() {
-//	scanner := bufio.NewScanner(os.Stdin)
-//	for scanner.Scan() {
-//		if scanner.Text() == "\n" {
-//			fmt.Print("?")
-//		}
-//		if scanner.Text() == "exit" {
-//			return
-//		}
-//	}
-//}
-
 func main() {
-	var goods, storage, numbers, numerus, числа Table
 	goods.Init([]string{"id", "item", "price"}, []string{"int", "string", "string"})
 	storage.Init([]string{"id", "area", "item"}, []string{"int", "string", "string"})
 	numbers.Init([]string{"id", "name"}, []string{"int", "string"})
@@ -171,6 +210,5 @@ func main() {
 	numerus.Export("numerus.csv")
 	числа.Export("числа.csv")
 
-	goods, _ = Select([]string{"id", "price"}, goods, "", 0)
-	fmt.Print(goods)
+	scanner()
 }
