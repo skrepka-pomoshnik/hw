@@ -1,7 +1,7 @@
 F = @(t) 1/(t^2+13)
 A = 0
 B = 1
-STEPS = 4
+STEPS = 1
 EXACT = atan(B/sqrt(13))/sqrt(13) - atan(A/sqrt(13))/sqrt(13)
 
 %left rectangle
@@ -59,12 +59,12 @@ function integral = simpson(f, a, b, n)
 end
 
 %compute everything
-left(F,0,1,1)
-trapezoidal(F,0,1,1)
-simpson(F,0,1,1)
-EXACT-left(F,0,1,1)
-EXACT-trapezoidal(F,0,1,1)
-EXACT-simpson(F,0,1,1)
+left(F,A,B,STEPS)
+trapezoidal(F,A,B,STEPS)
+simpson(F,A,B,STEPS)
+EXACT-left(F,A,B,STEPS)
+EXACT-trapezoidal(F,A,B,STEPS)
+EXACT-simpson(F,A,B,STEPS)
 
 %trapezoidal(F,0,1,3)
 %EXACT-trapezoidal(F,0,1,3)
