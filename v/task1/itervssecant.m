@@ -1,3 +1,4 @@
+%secant method handle
 function runsecant()
     f = @(x) x^2 - 20*sin(x);
     eps = 1e-9;
@@ -11,6 +12,7 @@ function runsecant()
     end
 end
 
+%secand method
 function [solution,err] = secant(f, x0, x1, eps)
     f_x0 = f(x0);
     f_x1 = f(x1);
@@ -32,6 +34,7 @@ function [solution,err] = secant(f, x0, x1, eps)
 end
 
 
+%iteration method handle
 function runiterations()
     f = @(x) x^2 - 20*sin(x);
     eps = 1e-9;
@@ -42,6 +45,7 @@ function runiterations()
         fprintf('Solution: %f\n', solution);
 end
 
+%iteration method, WARNING: is unstable 
 function [solution,err] = iterate(f, x0, eps, lambda)
     phi = @(x) x - f(x)/lambda;
     it = 0;
